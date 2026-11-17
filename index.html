@@ -47,7 +47,7 @@ h1{font-size:29px; font-weight:800; letter-spacing:.02em; margin-bottom:9px}
   <h1>拼豆色号助手</h1>
   <p class="sub">拼豆图纸生成 · 色号助手</p>
 
-  <a class="btn android" id="btnApk" href="https://cdn.jsdelivr.net/gh/white055510-dev/perler-helper@main/perler-release.apk" download>
+  <a class="btn android" id="btnApk" href="https://gcore.jsdelivr.net/gh/white055510-dev/perler-helper@main/perler-release.apk" download>
     <span class="ic">⬇</span><span>下载 Android 版 (APK)</span>
   </a>
   <a class="btn ios" id="btnIos" href="https://white055510-dev.github.io/perler-helper/online/">
@@ -63,8 +63,8 @@ h1{font-size:29px; font-weight:800; letter-spacing:.02em; margin-bottom:9px}
 </div>
 
 <script>
-var APK_URLS = ["https://cdn.jsdelivr.net/gh/white055510-dev/perler-helper@main/perler-release.apk","https://white055510-dev.github.io/perler-helper/perler-release.apk"];
-var ONLINE_URLS = ["https://white055510-dev.github.io/perler-helper/online/","https://raw.githack.com/white055510-dev/perler-helper/main/online/index.html"];
+var APK_URLS = ["https://gcore.jsdelivr.net/gh/white055510-dev/perler-helper@main/perler-release.apk","https://testingcf.jsdelivr.net/gh/white055510-dev/perler-helper@main/perler-release.apk","https://cdn.jsdelivr.net/gh/white055510-dev/perler-helper@main/perler-release.apk","https://white055510-dev.github.io/perler-helper/perler-release.apk"];
+var ONLINE_URLS = ["https://white055510-dev.github.io/perler-helper/online/","https://raw.githack.com/white055510-dev/perler-helper/main/online/index.html","https://rawcdn.githack.com/white055510-dev/perler-helper/main/online/index.html"];
 
 var ua = navigator.userAgent || '';
 var isAndroid = /Android/i.test(ua);
@@ -92,27 +92,39 @@ if (isAndroid) {
 btnApk.addEventListener('click', function(e){
   if (APK_URLS.length < 2) return;
   e.preventDefault();
+  probeAndGo(APK_URLS, '正在连接下载源…', '下载源都连不上，请复制链接用浏览器打开：' + APK_URLS[0]);
+});
+
+/* iPhone 网页版打不开时切换镜像 */
+btnIos.addEventListener('click', function(e){
+  if (ONLINE_URLS.length < 2) return;
+  e.preventDefault();
+  probeAndGo(ONLINE_URLS, '正在连接…', '网页版连不上，请复制链接用浏览器打开：' + ONLINE_URLS[0]);
+});
+
+/* 依次探测多个源，第一个通的就跳过去 */
+function probeAndGo(urls, connectingText, failText) {
   var i = 0;
-  statusEl.textContent = '正在连接下载源…';
+  statusEl.textContent = connectingText;
   function tryNext() {
-    if (i >= APK_URLS.length) {
-      statusEl.textContent = '下载源都连不上，请复制链接用浏览器打开：' + APK_URLS[0];
+    if (i >= urls.length) {
+      statusEl.textContent = failText;
       return;
     }
-    var url = APK_URLS[i++];
-    var img = new Image();
+    var url = urls[i++];
     var done = false;
-    var t = setTimeout(function(){ if(!done){ done=true; tryNext(); } }, 3500);
+    var t = setTimeout(function(){ if(!done){ done=true; tryNext(); } }, 3000);
+    var img = new Image();
     img.onload = img.onerror = function(){
       if (done) return;
       done = true; clearTimeout(t);
       statusEl.textContent = '';
       window.location.href = url;
     };
-    img.src = url + '?probe=' + Date.now();
+    img.src = url + (url.indexOf('?') >= 0 ? '&' : '?') + 'probe=' + Date.now();
   }
   tryNext();
-});
+}
 </script>
 </body>
 </html>
