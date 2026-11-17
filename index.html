@@ -2,115 +2,117 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
-<title>拼豆色号助手 · 下载</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#101A26">
+<title>拼豆色号助手</title>
 <style>
-:root{
-  --bg:#0F1923; --panel:#141F2A; --line:#2A3B4D;
-  --red:#FF4655; --teal:#00C8C8; --txt:#ECE8E1; --txt2:#8FA3B3;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{min-height:100%}
 body{
-  background:var(--bg); color:var(--txt); font-family:-apple-system,"PingFang SC","Microsoft YaHei",system-ui,sans-serif;
-  display:flex; align-items:center; justify-content:center; padding:24px;
-  background-image:
-    repeating-linear-gradient(45deg, rgba(255,255,255,.012) 0 2px, transparent 2px 8px),
-    radial-gradient(900px 500px at 80% -10%, rgba(255,70,85,.10), transparent 60%),
-    radial-gradient(700px 500px at 0% 110%, rgba(0,200,200,.07), transparent 60%);
+  background:#101A26; color:#E8EDF2;
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei","Helvetica Neue",Arial,sans-serif;
+  display:flex; align-items:center; justify-content:center;
+  padding:40px 22px; min-height:100vh;
 }
-.card{
-  width:100%; max-width:420px; background:var(--panel); border:1px solid var(--line);
-  padding:32px 24px; text-align:center; position:relative; clip-path:polygon(14px 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,0 100%,0 14px);
+.wrap{width:100%; max-width:430px; text-align:center}
+.icon{
+  width:96px; height:96px; margin:0 auto 22px; display:block;
+  border-radius:22px; box-shadow:0 8px 28px rgba(0,0,0,.45);
 }
-.badge{display:inline-block;font-size:11px;letter-spacing:.2em;color:var(--teal);font-weight:700;margin-bottom:14px}
-h1{font-size:24px;letter-spacing:.06em;margin-bottom:8px}
-h1 em{color:var(--red);font-style:normal}
-.sub{color:var(--txt2);font-size:13px;line-height:1.7;margin-bottom:26px}
+h1{font-size:29px; font-weight:800; letter-spacing:.02em; margin-bottom:9px}
+.sub{font-size:13.5px; color:#8A9BAC; margin-bottom:34px; letter-spacing:.02em}
 .btn{
-  display:block; width:100%; padding:15px; margin:10px 0; border:1px solid var(--line);
-  background:var(--panel); color:var(--txt); font-size:15px; font-weight:700; letter-spacing:.08em;
-  cursor:pointer; text-decoration:none; clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px);
+  display:flex; align-items:center; justify-content:center; gap:9px;
+  width:100%; padding:16px 18px; margin-bottom:16px;
+  border:none; border-radius:13px; cursor:pointer;
+  font-size:16px; font-weight:700; letter-spacing:.02em;
+  color:#fff; text-decoration:none; transition:transform .12s, filter .12s;
 }
-.btn.primary{background:linear-gradient(180deg,#FF7A85,#FF4655 55%,#E8384A);border-color:#FFA3AB;color:#fff;
-  box-shadow:0 0 14px rgba(255,70,85,.45)}
-.btn.ios{border-color:var(--teal);color:var(--teal)}
-.btn:active{filter:brightness(1.1)}
-.tip{margin-top:18px;font-size:11px;color:var(--txt2);line-height:1.7}
-.spin{width:34px;height:34px;border:3px solid var(--line);border-top-color:var(--red);border-radius:50%;
-  animation:sp .8s linear infinite;margin:0 auto 18px}
-@keyframes sp{to{transform:rotate(360deg)}}
-#auto{display:block;margin-bottom:18px;font-size:12px;color:var(--teal)}
+.btn:active{transform:scale(.985); filter:brightness(1.08)}
+.btn .ic{font-size:19px; line-height:1}
+.android{background:#3C9D3F; box-shadow:0 4px 16px rgba(60,157,63,.32)}
+.ios{background:#1976D2; box-shadow:0 4px 16px rgba(25,118,210,.32)}
+.note{text-align:left; font-size:13px; line-height:1.85; color:#96A6B6; margin-top:26px}
+.note p{margin-bottom:11px}
+.note b{color:#C8D4E0; font-weight:700}
+.status{
+  font-size:12.5px; color:#7E8E9E; margin-top:20px; line-height:1.6;
+  min-height:20px;
+}
 </style>
 </head>
 <body>
-<div class="card">
-  <div class="spin" id="spin"></div>
-  <div class="badge">PERLER · HELPER</div>
-  <h1>拼豆<em>色号助手</em></h1>
-  <p class="sub" id="msg">正在识别你的设备…</p>
-  <div id="auto"></div>
-  <a class="btn primary" id="btnAndroid" href="#" style="display:none">🤖 下载 Android 安装包</a>
-  <a class="btn ios" id="btnIphone" href="#" style="display:none">🍎 在浏览器中打开使用</a>
-  <a class="btn" id="btnApk" href="#" style="display:none">备用：直接下载 APK</a>
-  <p class="tip" id="tip"></p>
+<div class="wrap">
+  <img class="icon" id="appIcon" alt="拼豆色号助手" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAFEklEQVR42u2bMYoVQRBAe1pDMTLY9QILgpho5hG8hwpiooloqJhoIoJ6D4+wmSYiLOwF3B8YialoKK49xa+uruma6VfhMNMjvtfVVbXzp+QYB9du/06EOXYnx5PX2hPAxxZiAvzYIkyAH1uECfBji5CBv52oYZOBP7YEE+DHPhIy8MfOBhn4Y0uQ+S8aOzK7f+wskIE/tgQZ+GNLQA1ADcDuHzkLkAHIAOz+kbMAGYAMwO4fOQuQAcgABAIQw8bE+U8GIBCAGDUuRvhH3HxxpXj989PvLu979OFy8frruz9c3nf27lPx+uH9W2PXAHPgvUSYA+8lwhz4SCLk6PC191rha++1wtfeuwkBaoBaJKgBapGgBmgvCfIa4FuetYCsedYCsocEeS3wa9Zokco1a7QAuLQEIbqAUqHXQhZNoddCFk2h1/Pc75IBJKClKl+q/PeRQwJaqvKlyn8fOSSgpSpfqvyXlCNH2/necwAJtMccQAIdYQ7AJDAxCiYQgECAFG8i6NEJSAWdRycgFXQROoEcodgrgdZ2DdaqXts1WKt6bdew+TmAd9+/xG6POu8PcwS0aOs0a7Ro6zRrtNi5S7eGOVLf7/GsRYKaZy0Ae8wFcrThj4c4NSAt4tSA7DUUyhEngB5HhwZoi6NDA7TnRDDEV8F8Epb4LJxgEkggAIEABAIQCEAgAIEARBrir4G7N++L1w8e3nN539n1b8Xrh1+vurzvy8+j4vUbl07T0IOgOfBeIsyB9xJhDnwkEXJ0+Np7rfC191rha+/dhAA1QC0S1AC1SFADtJcEeQ3wLc9aQNY8awHZQ4K8Fvg1a7RI5Zo1WgBcWoIw3wSeL/RayKIp9FrIoin0ep77XTKABLRU5UuV/z5ySEBLVb5U+e8jhwS0VOVLlf+ScuRoO997DiCB9pgDSKAjzAGYBCZGwQQCEAiQ4k0EPToBqaDz6ASkgi5CJ5AjFHsl0NquwVrVa7sGa1Wv7Ro2Pwfw7vuX2O1R5/1hjoAWbZ1mjRZtnWaNFjt36dYwR+r7PZ61SFDzrAVgj7lAjjb88RCnBqRFnBqQvYZCOeIE0OPo0ABtcXRogPacCIb4aRifhCV+G0gwCSQQgEAAAgEIBCAQgEAAIg3x18Dnvx4Xrz+78MrlfUdHT4rXT09furxv9+BO8frB249p6EHQHHgvEebAe4kwBz6SCDk6fO29Vvjae63wtfduQoAaoBYJaoBaJKgB2kuCvAb4lmctIGuetYDsIUFeC/yaNVqkcs0aLQAuLUGYbwLPF3otZNEUei1k0RR6Pc/9LhlAAlqq8qXKfx85JKClKl+q/PeRQwJaqvKlyn9JOXK0ne89B5BAe8wBJNAR5gBMAhOjYAIBCARI8SaCHp2AVNB5dAJSQRehE8gRir0SaG3XYK3qtV2DtarXdg2bnwN49/1L7Pao8/4wR0CLtk6zRou2TrNGi527dGuYI/X9Hs9aJKh51gKwx1wgRxv+eIhTA9IiTg3IXkOhHHEC6HF0aIC2ODo0QHtOBEP8NIxPwhK/DSSYBBIIQCwuwO7keOK/YczYnRxPZACOAAIBiLEFoA4Y8/wnAxB/BSALjLf7yQDEvwKQBcba/WQA4n8ByALj7P7ZDIAEY8AXjwAk2D58agBCFoAssO3dv1cGQILtwk8pJRVcPh/bDviqGoBssC34VUUgEmwHvvoI4EjYDvgmAiDCesE3FQAR1gfeRQCEiA/8fPwBdU+FiErnYa4AAAAASUVORK5CYII=">
+  <h1>拼豆色号助手</h1>
+  <p class="sub">拼豆图纸生成 · 色号助手</p>
+
+  <a class="btn android" id="btnApk" href="https://cdn.jsdelivr.net/gh/white055510-dev/perler-helper@main/perler-release.apk" download>
+    <span class="ic">⬇</span><span>下载 Android 版 (APK)</span>
+  </a>
+  <a class="btn ios" id="btnIos" href="https://white055510-dev.github.io/perler-helper/online/">
+    <span class="ic">▸</span><span>打开 iPhone 网页版</span>
+  </a>
+
+  <div class="note">
+    <p><b>Android</b>：点击绿色按钮下载 APK，下载完成后打开安装（首次会提示允许「安装未知来源」）。</p>
+    <p><b>iPhone</b>：点击蓝色按钮打开网页版，在 Safari 中点击底部「分享」→「添加到主屏幕」，即可全屏使用。</p>
+  </div>
+
+  <div class="status" id="status"></div>
 </div>
 
 <script>
-/* ====== 配置区 ====== */
-var CONFIG = {
-  apkUrl:   'https://white055510-dev.github.io/perler-helper/perler-release.apk',
-  onlineUrl:'https://white055510-dev.github.io/perler-helper/online/'
-};
-/* ================== */
+var APK_URLS = ["https://cdn.jsdelivr.net/gh/white055510-dev/perler-helper@main/perler-release.apk","https://white055510-dev.github.io/perler-helper/perler-release.apk"];
+var ONLINE_URLS = ["https://white055510-dev.github.io/perler-helper/online/","https://raw.githack.com/white055510-dev/perler-helper/main/online/index.html"];
 
 var ua = navigator.userAgent || '';
 var isAndroid = /Android/i.test(ua);
 var isiOS = /iPhone|iPad|iPod/i.test(ua);
-var inWechat = /MicroMessenger/i.test(ua);
+var isWechat = /MicroMessenger/i.test(ua);
 
-var msg = document.getElementById('msg');
-var auto = document.getElementById('auto');
-var spin = document.getElementById('spin');
-var btnAndroid = document.getElementById('btnAndroid');
-var btnIphone = document.getElementById('btnIphone');
 var btnApk = document.getElementById('btnApk');
-var tip = document.getElementById('tip');
+var btnIos = document.getElementById('btnIos');
+var statusEl = document.getElementById('status');
 
-btnAndroid.href = CONFIG.apkUrl;
-btnApk.href = CONFIG.apkUrl;
-btnIphone.href = CONFIG.onlineUrl;
-
-function done(text){
-  msg.textContent = text;
-  spin.style.display = 'none';
-}
+btnApk.href = APK_URLS[0];
+btnIos.href = ONLINE_URLS[0];
 
 if (isAndroid) {
-  btnAndroid.style.display = 'block';
-  btnApk.style.display = 'block';
-  if (inWechat) {
-    done('检测到微信内置浏览器。请点右上角「···」→「在浏览器打开」后再下载。');
-    tip.textContent = 'Android 手机：点上方按钮下载 APK 安装使用。';
-  } else {
-    done('检测到 Android 设备，正在准备下载…');
-    auto.textContent = '如未自动开始，请点下方按钮';
-    setTimeout(function(){ window.location.href = CONFIG.apkUrl; }, 600);
-    tip.textContent = '安装时如提示「未知来源」，请允许本应用安装即可。';
-  }
+  statusEl.textContent = isWechat
+    ? '当前在微信内，若无法下载请点右上角「···」→「在浏览器打开」'
+    : '';
 } else if (isiOS) {
-  btnIphone.style.display = 'block';
-  done('检测到 iPhone / iPad，正在打开…');
-  auto.textContent = '如未自动跳转，请点下方按钮';
-  setTimeout(function(){ window.location.href = CONFIG.onlineUrl; }, 600);
-  tip.textContent = '提示：在 Safari 中点「分享」→「添加到主屏幕」，可像 App 一样全屏使用。';
-} else {
-  btnAndroid.style.display = 'block';
-  btnIphone.style.display = 'block';
-  btnApk.style.display = 'block';
-  done('请选择你的设备');
-  tip.textContent = 'Android 下载 APK 安装；iPhone 直接在浏览器打开使用。';
+  statusEl.textContent = isWechat
+    ? '当前在微信内，建议点右上角「···」→「在 Safari 中打开」'
+    : '';
 }
+
+/* APK 下载失败时自动切换到下一个镜像 */
+btnApk.addEventListener('click', function(e){
+  if (APK_URLS.length < 2) return;
+  e.preventDefault();
+  var i = 0;
+  statusEl.textContent = '正在连接下载源…';
+  function tryNext() {
+    if (i >= APK_URLS.length) {
+      statusEl.textContent = '下载源都连不上，请复制链接用浏览器打开：' + APK_URLS[0];
+      return;
+    }
+    var url = APK_URLS[i++];
+    var img = new Image();
+    var done = false;
+    var t = setTimeout(function(){ if(!done){ done=true; tryNext(); } }, 3500);
+    img.onload = img.onerror = function(){
+      if (done) return;
+      done = true; clearTimeout(t);
+      statusEl.textContent = '';
+      window.location.href = url;
+    };
+    img.src = url + '?probe=' + Date.now();
+  }
+  tryNext();
+});
 </script>
 </body>
 </html>
